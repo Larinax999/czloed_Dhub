@@ -1,0 +1,5 @@
+Flask
+Flask-Cors
+pytesseract
+requests
+bs4

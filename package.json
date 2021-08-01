@@ -1,0 +1,12 @@
+{
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "http-proxy": "^1.18.1",
+    "https-proxy-agent": "^5.0.0",
+    "node-fetch": "^2.6.1",
+    "request-promise-native": "^1.0.9",
+    "socks-proxy-agent": "^5.0.1",
+    "ws": "^7.5.0"
+  }
+}
