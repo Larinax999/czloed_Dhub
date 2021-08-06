@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+   <head>
+      <meta charset="UTF-8">
+      <title>czloed Dhub</title>
+      <link rel="icon" type="image/png" href="favicon.png"/>
+      <link rel="stylesheet" href="css/style.css">
+
+   </head>
+   <body>
+   
+      <div class="menu">
+         <button id="Gen" class="method">Token Gen</button>
+         <button id="Live" class="method">Livestream</button>
+         <button id="On" class="method">Online</button>
+         <button id="Settings" class="method">Settings</button>
+         <span>Balance : <span id="bal">0</span></span>
+         <span>Tokens : <span id="token_am">0</span></span>
+      </div>
+	  
+      <div class="menu-btn"><span></span></div>
+	  
+      <div id="gen" style="display: none;" class="container">
+         <h1>token generator</h1>
+         <div class="form">
+			<input type="text" id="username" placeholder="username" maxlength="20" required>
+			<input type="text" id="invite" placeholder="Invite Code" maxlength="15" required>
+			<input type="text" id="amount" placeholder="amount of bot" oninput="this.value=this.value.replace(/[^\d]/,'') && if (this.value > 2000) {this.value==2000}"maxlength="4" required>
+			<button class="send" id="gen-btn" onclick="gen();">Send</button>
+         </div>
+      </div>
+	  
+      <div id="live" style="display: none;" class="container">
+         <h1>livestream</h1>
+         <div class="form">
+            <input id="guild_id" type="text" placeholder="Guild ID">
+            <input id="chid" type="text" placeholder="Channel ID">
+            <button class="send" id="live-btn" onclick="update('l')">start</button>
+         </div>
+      </div>
+	  
+      <div id="on" style="display: none;" class="container">
+         <h1>online</h1>
+         <div class="form">
+            <textarea id="msg_o" type="text" placeholder="Message"></textarea>
+            <br>
+            <button class="send" id="on-btn" onclick="update('o')">start</button>
+         </div>
+      </div>
+	  
+      <div id="settings" style="display: none;" class="container">
+         <h1>settings</h1>
+         <div class="form">
+            <input id="user" type="text" placeholder="User ID">
+            <textarea id="message" type="text" placeholder="Message to send"></textarea>
+            <button class="send" id="dm-btn" onclick="update('s')">Save</button>
+         </div>
+      </div>
+	  
+      <!--<a class="github" title="Check out my github" alt="Check out my github" href="https://github.com/Lemons1337" target="_blank">
+      <i class="fa fa-2x fa-github" aria-hidden="true"></i>
+      </a>-->
+	  
+      <ul class="bg-bubbles">
+         <li></li>
+         <li></li>
+         <li></li>
+         <li></li>
+         <li></li>
+         <li></li>
+         <li></li>
+         <li></li>
+         <li></li>
+         <li></li>
+      </ul>
+      <script>
+		var hostname = "http://127.0.0.1";
+		var online=false;
+		var livestream=false;
+		
+		function get_value(name){
+			try {
+				return document.getElementById(name).value;
+			} catch {
+				return 0;
+			}
+		}
+		function change_value(name, value){
+			document.getElementById(name).innerHTML = value;
+		}
+
+		function gen() {
+			if (0 == (get_value("username") && get_value("invite") && get_value("amount"))) {
+				return;
+			}
+			fetch(`${hostname}/gen?username=${get_value("username")}&invite=${get_value("invite")}&amount=${get_value("amount")}`, {method: "POST"})
+		}
+		
+		function update(a) {
+			msg="";
+			b=false;
+			if (a == "o"){
+				if (online == true){
+					b = 0;
+					online = false;
+					change_value("on-btn","start");
+				} else {
+					b = 1;
+					online = true;
+					msg=get_value("msg_o");
+					change_value("on-btn","stop");
+				}
+			} else if (a == "l") {
+				if (livestream == true){
+					b = 0;
+					livestream = false;
+					change_value("live-btn","start");
+				} else {
+					b = 1;
+					livestream = true;
+					msg=get_value("guild_id")+"|"+get_value("chid");
+					change_value("live-btn","stop");
+				}
+			}
+			fetch(`${hostname}/update?method=${a}&tf=${b}&msg=${msg}`, {method: "POST"});
+		}
+
+		function stats() {
+			fetch(`${hostname}/stats`).then(async res => {
+				res = await res.text();
+				res = res.split("|");
+				document.getElementById("bal").innerHTML = res[1];
+				document.getElementById("token_am").innerHTML = res[0];
+			})
+		}
+	  (function() {
+			const toggler = document.querySelector('.menu-btn');
+			const menu = document.querySelector('.menu');
+			const send = document.getElementsByClassName("send");
+			const buttons = document.getElementsByClassName("method");
+			const methods = document.getElementsByClassName("container");
+
+			toggler.addEventListener('click', () => {
+				toggler.classList.toggle('active');
+				menu.classList.toggle('active');
+			});
+			
+			for (var f of buttons) {
+				f.onclick = function() {
+					var id = this.id.toLowerCase();
+					for (var g of methods) {
+						if (g.id === id) {
+							document.getElementById(id).style.display = "block";
+						} else {
+							g.style.display = "none";
+						}
+					}
+				}
+			}
+
+			window.onload = function() {
+				switch (localStorage.method) {
+					case "gen":
+						for (var i of methods) {
+							if (i.id === localStorage.method) {
+								i.style.display = "block";
+							} else {
+								i.style.display = "none";
+							}
+						}
+						break;
+
+					case "live":
+						for (var i of methods) {
+							if (i.id === localStorage.method) {
+								i.style.display = "block";
+							} else {
+								i.style.display = "none";
+							}
+						}
+						break;
+
+					case "on":
+						for (var i of methods) {
+							if (i.id === localStorage.method) {
+								i.style.display = "block";
+							} else {
+								i.style.display = "none";
+							}
+						}
+						break;
+
+					case "settings":
+						for (var i of methods) {
+							if (i.id === localStorage.method) {
+								i.style.display = "block";
+							} else {
+								i.style.display = "none";
+							}
+						}
+						break;
+
+					default:
+						for (var i of methods) {
+							if (i.id === "gen") {
+								i.style.display = "block";
+							} else {
+								i.style.display = "none";
+							}
+						}
+						break;
+				}
+				setTimeout(()=>{
+					toggler.classList.toggle('active');
+					menu.classList.toggle('active');
+				},500)
+			}
+
+			
+			stats()
+			setInterval(() => {
+				stats()
+			}, 10000);
+
+		})();
+      </script>
+   </body>
+</html>
