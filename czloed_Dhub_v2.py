@@ -1,10 +1,9 @@
 from requests import get, post, Session
-from random import randint, choice
+from random import randint, choice,randrange
 from re import findall, sub
 from websocket import WebSocket
 from string import ascii_lowercase, digits
-#from concurrent.futures import ThreadPoolExecutor
-from threading import Thread,active_count
+from concurrent.futures import ThreadPoolExecutor
 from time import sleep
 from json import loads,dumps,load
 from flask import Flask, request
@@ -28,7 +27,7 @@ livesteam_ch = None
 livesteam_g = None
 runn = False
 # init threadpool
-#executor = ThreadPoolExecutor(max_workers=int(10000))
+executor = ThreadPoolExecutor(max_workers=int(10000))
 
 def headers(token=None, fingerprint=None, mail=False,xsu=None,useragent=None, referrer="https://discord.com/channels/@me") :
     if token :
@@ -55,6 +54,13 @@ def headers(token=None, fingerprint=None, mail=False,xsu=None,useragent=None, re
 #def clear():
 #    system('cls' if name=='nt' else 'clear')
 
+
+def asciigen(length):
+    asc = ''
+    for x in range(int(length)):
+        num = randrange(13000)
+        asc = asc + chr(num)
+    return asc
 
 def get_bal():
     return post('https://api.capmonster.cloud/getBalance',timeout=5,json={"clientKey": config['cap_key']}).json()['balance']
@@ -96,7 +102,7 @@ def get_captcha_code():
 def token_gen(username,invite=config["invite_link"], verify_mail=False, verify_phone=False, file_name="token"):
     global token_am
     password = "czloed_Dhub@"
-    register_payload = {"fingerprint":"","email": randomstr(randint(3, 6)) + randomint(randint(3, 5)) + "@gmail.com","username":username,"password": password,"invite":invite,"consent":True,"date_of_birth":"1999-03-05","gift_code_sku_id":"","captcha_key":""}
+    register_payload = {"fingerprint":"","email": randomstr(randint(3, 6)) + randomint(randint(3, 5)) + "@gmail.com","username":username,"password": password,"invite":invite,"consent":True,"date_of_birth":"1999-06-10","gift_code_sku_id":"","captcha_key":""}
     
     if verify_mail :
         mail_domain = get("https://api.mail.tm/domains", headers=headers(mail=True)).json()["hydra:member"][0]["domain"]
@@ -104,13 +110,13 @@ def token_gen(username,invite=config["invite_link"], verify_mail=False, verify_p
         post("https://api.mail.tm/accounts",json={"address":mail,"password":password}, headers=headers(mail=True))
         register_payload["email"] = mail
         mail_token = post("https://api.mail.tm/token",json={"address":mail,"password":password}, headers=headers(mail=True)).json()["token"]
-    fingerprint = get_fingerprint()
-    register_payload["fingerprint"] = fingerprint
+    #fingerprint = get_fingerprint()
+    #register_payload["fingerprint"] = fingerprint
     register_payload["captcha_key"] = get_captcha_code()
     while True:
         proxy = {'https': f"socks4://{get_proxy()}"}
         try :
-            textres = post("https://discord.com/api/v9/auth/register", timeout=5,proxies=proxy, json=register_payload, headers=headers(referrer="https://discord.com/register", fingerprint=fingerprint)).json()
+            textres = post("https://discord.com/api/v9/auth/register", timeout=5,proxies=proxy, json=register_payload, headers=headers(referrer="https://discord.com/register")).json()#, fingerprint=fingerprint
             discord_token = textres["token"]
             print("[token gen] I Got token | " + discord_token)
             a = open(f'{file_name}.txt', 'a')
@@ -247,15 +253,6 @@ def bypass_fortune_invite(token, invite): # fix
     s = s.split('","')
     print(session.post("https://ftune.app/_go/" + invite, headers=headers(s[-2])).text)
 
-def livestream(token, chid, guild_id):
-    ws = WebSocket()
-    ws.connect("wss://gateway.discord.gg/?v=8&encoding=json")
-    hello = loads(ws.recv())
-    heartbeat_interval = hello['d']['heartbeat_interval']
-    ws.send(dumps({"op": 2,"d": {"token": token,"properties": {"$os": "windows","$browser": "Discord","$device": "desktop"}}}))
-    
-    ws.send(dumps({"op": 4,"d": {"guild_id": guild_id,"channel_id": chid,"self_mute": True,"self_deaf": True}}))
-    ws.send(dumps({"op": 18,"d": {"type": "guild","guild_id": guild_id,"channel_id": chid,"preferred_region": "singapore"}}))
     '''
     while runn:
         sleep(heartbeat_interval/1000)
@@ -273,7 +270,7 @@ def online(token,name,livesteam,loop, chid=None, guild_id=None):
     hello = loads(ws.recv())
     ws.send(dumps({"op": 2,"d": {"token": token,"properties": {"$os": "windows","$browser": "Discord","$device": "desktop"},"presence": {"game": {"name": name,"type": randint(0,3)},"status": choice(['online', 'dnd', 'idle']),"since": 0,"afk": False}}}))
     if livesteam:
-        print()
+
         ws.send(dumps({"op": 4,"d": {"guild_id": guild_id,"channel_id": chid,"self_mute": True,"self_deaf": True}}))
         ws.send(dumps({"op": 18,"d": {"type": "guild","guild_id": guild_id,"channel_id": chid,"preferred_region": "singapore"}}))
     if loop:
@@ -289,12 +286,15 @@ def start(username,invite):
     token = token_gen(username,invite,ver_m, ver_p)
     if online_tf:
         online(token,online_msg,livesteam_tf,runn,livesteam_ch,livesteam_g)
+    #for a in range(50):
+    #    sendmsg("@everyone", "870945232554954764", "870945229577019422", token)
 
 @app.route("/gen", methods=['POST'])
 def api_gen():
     for aa in range(int(request.args['amount'])):
-        Thread(target=start,args=(request.args['username'],request.args['invite'])).start()
-        if active_count() > 500:
+        executor.submit(start,request.args['username'],request.args['invite'])
+        #start(request.args['username'],request.args['invite'])
+        if aa > 500:
             print("[main] wait 5 sec")
             sleep(5)
         sleep(0.01)
@@ -303,7 +303,10 @@ def api_gen():
 
 @app.route("/stats", methods=['GET'])
 def api_stats():
-    return f"{str(token_am)}|{str(get_bal())}"
+    try :
+        return f"{str(token_am)}|{str(get_bal())}"
+    except :
+        return f"ERROR|ERROR",500
 
 @app.route("/update", methods=['POST'])
 def api_update():
@@ -332,6 +335,10 @@ def index():
 
 if __name__ == "__main__":
     app.run(host='127.0.0.1',port=80)
+    #asdasd = ["ODc1MDIzMzE4MzEzNDkyNTIw.YRPfHA.pg4KFQ6IVrsWIIOJ5E6z4qqUl4I","ODc1MDI2MjU4MzQ0NDExMTY2.YRPh2g.x2duBXL32Eb3Yt2bFeu8bHfKZJY","ODc1MDI2NjU2NzU3MTY2MTkx.YRPiHw.QxNv6stl6iENxpk8xcRonrjBP9Y"]
+    #for aaaaa in range(10):
+    #    executor.submit(sendmsg,f"@everyone {asciigen(1988)}","875031605272522792","870945229577019422", "ODc1MDIzMzE4MzEzNDkyNTIw.YRPfHA.pg4KFQ6IVrsWIIOJ5E6z4qqUl4I")
+        #sendmsg("@everyone", "870945232554954764", "870945229577019422", asdasd)
     '''
     if empty():
         exit('capmonster balance empty')
@@ -351,4 +358,4 @@ if __name__ == "__main__":
 # bypass_aria("<token>", ["a","a","a"], "<channel_id>", "<guild_id>") #free
 # bypass_aria_verify("<token>","854917182172299274", "850027624918810624") #free
 
-# livesteam("<token>", "<ch_id>", "<guild_id>") #free
+# livesteam("<token>", "<ch_id>", "<guild_id>") #freeonline("ODc1MDIzMzE4MzEzNDkyNTIw.YRPfHA.pg4KFQ6IVrsWIIOJ5E6z4qqUl4I","a",False,False)
