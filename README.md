@@ -8,7 +8,7 @@ v1 patch
 
 v2 patch
 
-v3 can use
+v3 patch
 
 hcaptcha bypass can use
 
