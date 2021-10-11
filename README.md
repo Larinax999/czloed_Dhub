@@ -14,6 +14,6 @@ serr gen (working)
 
 livestream (working)
 
-hcaptcha bypass (can use)
+hcaptcha bypass (working)
 
 guild spoof (patch)
