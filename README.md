@@ -10,6 +10,8 @@ v2 (patch)
 
 v3 (patch)
 
+serr gen (working)
+
 hcaptcha bypass (can use)
 
 guild spoof (patch)
