@@ -26,8 +26,7 @@ def livestream(token,guild,ch) :
 def asciigen(length):
     asc = ''
     for x in range(int(length)):
-        num = randrange(13000)
-        asc = asc + chr(num)
+        asc += chr(randrange(13000))
     return asc
     
 def wh_spam(webhook):
