@@ -16,6 +16,8 @@ serr gen (working)
 
 livestream (working)
 
+discord guild outage (working but dm me to buy 50$)
+
 hcaptcha bypass (working)
 
 guild spoof (patch)
