@@ -16,6 +16,10 @@ serr gen (working)
 
 livestream (working)
 
+[spammer](https://github.com/Larinax999/czloed_Dhub/blob/main/czloed_Dhub_dub_dis.py) (working)
+
+among us spam (working)
+
 discord guild outage (working but dm me to buy 50$)
 
 hcaptcha bypass (working)
