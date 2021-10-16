@@ -19,3 +19,36 @@ livestream (working)
 hcaptcha bypass (working)
 
 guild spoof (patch)
+
+# requirements
+
+```bash
+pip install httpx==0.19.0
+```
+
+# free proxy list
+
+https://hideip.me/en/proxy/socks4list
+
+https://github.com/TheSpeedX/PROXY-List/blob/master/socks4.txt
+
+# tag
+
+discord 
+discord spam
+discord live
+discord gen
+discord token
+discord golive
+discord token generator
+discord token gen
+
+
+discord live spam
+discord live spammer
+discord stream spam
+discord stream spammer
+discord livestream spam
+discord livestream spammer
+discord golive spam
+discord golive spammer
