@@ -2,7 +2,7 @@
 
 by larina#9999 (500346652360572944)
 
-last update : 22/10/2021 20:56 (day/mo/year 24h)
+last update : 22/10/2021 21:26 (day/mo/year 24h)
 
 # info
 
@@ -24,7 +24,7 @@ among us spam (working)
 
 discord guild outage (working but dm me to buy 50$)
 
-hcaptcha bypass (working)
+hcaptcha bypass (working but slow)
 
 guild spoof (patch)
 
