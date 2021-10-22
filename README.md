@@ -2,7 +2,7 @@
 
 by larina#9999 (500346652360572944)
 
-last update : 22/10/2021 21:26 (day/mo/year 24h)
+edit : 22/10/2021 21:26 (day/mo/year 24h)
 
 # info
 
