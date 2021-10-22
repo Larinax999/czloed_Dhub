@@ -2,6 +2,8 @@
 
 by larina#9999 (500346652360572944)
 
+last update : 22/10/2021 20:56 (day/mo/year 24h)
+
 # info
 
 v1 (patch)
@@ -12,7 +14,7 @@ v3 (patch)
 
 v4 (working but dm me to buy 3$)
 
-serr gen (working)
+serr gen (patch)
 
 livestream (working)
 
