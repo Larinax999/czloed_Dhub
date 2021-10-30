@@ -254,7 +254,7 @@ def start():
 
 if __name__ == "__main__":
     system("")
-    config = load(open('config.json', encoding="utf8"))
+    #config = load(open('config.json', encoding="utf8"))
     executor = ThreadPoolExecutor(max_workers=int(1000000))
     headers=""
     token=""
