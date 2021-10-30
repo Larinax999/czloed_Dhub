@@ -178,7 +178,6 @@ def start():
             run = False
         elif op == "auto":
             guild=inputc("guild id")
-            lag()
             # delete roles
             print("[auto] delete roles")
             for r in get_all_roles(guild):
