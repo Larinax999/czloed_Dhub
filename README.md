@@ -2,7 +2,7 @@
 
 by larina#9999 (500346652360572944)
 
-edit : 22/10/2021 21:26 (day/mo/year 24h)
+edit : 07/11/2021 12:32 (day/mo/year 24h)
 
 # info
 
@@ -12,7 +12,7 @@ v2 (patch)
 
 v3 (patch)
 
-v4 (working but dm me to buy 3$)
+v4 (working but dm me to buy 15$)
 
 serr gen (patch)
 
