@@ -2,7 +2,7 @@
 
 by larina#9999 (500346652360572944)
 
-edit : 07/11/2021 12:32 (day/mo/year 24h)
+edit : 07/11/2021 22:30 (day/mo/year 24h)
 
 # info
 
@@ -16,7 +16,7 @@ v4 (working but dm me to buy 15$)
 
 serr gen (patch)
 
-livestream (working)
+livestream (working) original by [chanios](https://github.com/chanios)
 
 [spammer](https://github.com/Larinax999/czloed_Dhub/blob/main/czloed_Dhub_dub_dis.py) (working)
 
