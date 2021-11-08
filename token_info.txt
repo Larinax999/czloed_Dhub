@@ -1,7 +1,0 @@
-[0x99a]
-bot : https://discord.com/api/oauth2/authorize?client_id=863754459603795989&permissions=8&scope=bot
-token : ODYzNzU0NDU5NjAzNzk1OTg5.YOrgBg.3ai2vXbRupi-O0oU1lW73K9By1M
-
-[floodxc]
-bot : 
-token : ODY0NTM1NjM5Mzg2MzU3ODEw.YO23jg.EXv_iYdnmeCJ-fAS8KDQEqYElNkODcwOTg4NTM4MzAzMzUyODUy.YQUxTA.Vzp3bgO06i-3RmxEbx0pGFgMSU4
