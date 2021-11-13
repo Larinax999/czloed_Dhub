@@ -2,7 +2,7 @@
 
 by larina#9999 (500346652360572944)
 
-edit : 07/11/2021 22:35 (day/mo/year 24h)
+edit : 14/11/2021 01:58 (day/mo/year 24h)
 
 # info
 
@@ -22,7 +22,7 @@ livestream (working) original by [chanios](https://github.com/chanios)
 
 among us spam (working)
 
-discord guild outage (working but dm me to buy 50$)
+discord shutdown (make guild outage) (working but dm me to buy 3000$)
 
 hcaptcha bypass (working but slow)
 
